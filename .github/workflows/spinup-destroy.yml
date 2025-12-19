@@ -8,7 +8,7 @@ env:
   IMAGE_REGISTRY_URL: ghcr.io
   AZURE_RESOURCE_GROUP: cd-with-actions
   AZURE_APP_PLAN: actions-ttt-deployment
-  AZURE_LOCATION: '"eastus2"'
+  AZURE_LOCATION: '"West US 3"'
   ###############################################
   ### Replace <username> with GitHub username ###
   ###############################################
@@ -35,7 +35,7 @@ jobs:
       - name: Create Azure app service plan
         if: success()
         run: |
-          az appservice plan create --resource-group ${{env.AZURE_RESOURCE_GROUP}} --name ${{env.AZURE_APP_PLAN}} --is-linux --sku B1 --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+          az appservice plan create --resource-group ${{env.AZURE_RESOURCE_GROUP}} --name ${{env.AZURE_APP_PLAN}} --is-linux --sku F1 --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
 
       - name: Create webapp resource
         if: success()
@@ -45,7 +45,7 @@ jobs:
       - name: Configure webapp to use GHCR
         if: success()
         run: |
-          az webapp config container set --docker-image-name nginx --docker-registry-password ${{secrets.CR_PAT}} --docker-registry-url https://${{env.IMAGE_REGISTRY_URL}} --docker-registry-user ${{github.actor}} --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
+          az webapp config container set --container-image-name nginx --container-registry-password ${{secrets.CR_PAT}} --container-registry-url https://${{env.IMAGE_REGISTRY_URL}} --container-registry-user ${{github.actor}} --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --subscription ${{secrets.AZURE_SUBSCRIPTION_ID}}
 
   destroy-azure-resources:
     runs-on: ubuntu-latest
