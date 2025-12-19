@@ -11,7 +11,7 @@ env:
   ### Replace <username> with GitHub username ###
   ###############################################
   DOCKER_IMAGE_NAME: rtumba-azure-ttt
-  AZURE_WEBAPP_NAME: rtumba-ttt-app-prod
+  AZURE_WEBAPP_NAME: rtumba-ttt-app
   ###############################################
 
 jobs:
